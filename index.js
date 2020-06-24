@@ -1,8 +1,8 @@
 const canvas = document.querySelector('canvas')
 const ctx = canvas.getContext('2d')
 
-const size = 1000 // size of the canvas
-const resolution = 10 // size of each individual pixel or cell
+const size = 10000 // size of the canvas
+const resolution = 80 // size of each individual pixel or cell
 
 canvas.width = size
 canvas.height = size
@@ -18,10 +18,18 @@ function setupGrid() {
 
 var grid = setupGrid()
 
+let isPaused = false;
+
 function play() { // Play function that loops using requestAnimationFrame keeps recalling the function to repaint the screen. Meanwhile, grid is constantly being set to nextGrid on each iteration, effectively running it through the rules algorithm
     grid = nextGrid(grid)
     displayGrid(grid)
-    requestAnimationFrame(play)
+    if (isPaused) {
+        requestAnimationFrame(play)
+    }
+}
+
+window.onkeydown = function() {
+    isPaused = !isPaused
 }
 
 play()
