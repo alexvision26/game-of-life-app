@@ -8,7 +8,7 @@
 
 ## Technologies Used:
 
-Vanilla JS & HTML Canvas
+React.js & HTML5 Canvas
 
 ## Plan:
     - Initialize a grid structure. Array of arrays. Cols & Rows that are initialized with with live and dead cells. Live cell will be represented by a 1, dead cell will be represented by a 0. Cols and Rows will be instantiated based off of a set resolution scale.

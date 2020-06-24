@@ -8,7 +8,10 @@ class Game extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isPaused: false
+            isPaused: false,
+            count: 0,
+            renderCanvas: true,
+            running: false
         }
     }
 
@@ -29,33 +32,21 @@ class Game extends React.Component {
             return new Array(COLS).fill(null).map(() => new Array(ROWS).fill(0)
             .map(() => Math.floor(Math.random() * 2)))
         }
-
-        // function play() {
         
-        //     this.displayGrid(grid, ctx, resolution)
-        //     requestAnimationFrame(play)
-        // }
-
-        // play()
-        
-        const play = () => {
+        const play = () => { // the loop for the game with a pause flag
             if (this.state.isPaused === true){
-            grid = this.nextGrid(grid)
-            this.displayGrid(grid, ctx, resolution)
+                grid = this.nextGrid(grid)
+                this.displayGrid(grid, ctx, resolution)
+                this.setState({count: this.state.count += 1})
             }
-                requestAnimationFrame(play)
-            
+            requestAnimationFrame(play)
+
+            if (this.state.renderCanvas) {
+                // grid = this.displayGrid(grid, ctx, resolution)
+            }
         }
 
         play()
-        
-        
-    
-        // this.play(this.displayGrid, this.nextGrid)
-        // displayGrid()
-
-        // nextGrid(grid)
-    
         
     } //componentDidMount
 
@@ -68,6 +59,7 @@ class Game extends React.Component {
                 ctx.rect(c * resolution, r * resolution, resolution, resolution)
                 ctx.fillStyle = cell ? 'black' : 'white' // if the cell has no value, it is white, if it is 1, it is black
                 ctx.fill()
+
             }
         }
     }
@@ -84,6 +76,11 @@ class Game extends React.Component {
 
                 //figure out how to ignore cells on the edge of the grid
                 const cell = grid[c][r]
+
+                grid[c][0] = 0
+                grid[c][grid.length - 2] = 0
+                grid[0][r] = 0
+                grid[grid.length - 1][r] = 0
                 let sum = 0 // this variable stores the number of neighboring cells for each cell in the entire game. Once the sum is found, it goes through the if statement below
                 sum += grid[c - 1][r]
                 sum += grid[c - 1][r - 1]
@@ -93,7 +90,13 @@ class Game extends React.Component {
                 sum += grid[c + 1][r + 1]
                 sum += grid[c][r + 1]
                 sum += grid[c][r - 1]
-                // console.log(sum)
+
+
+                nextGrid[c][0] = 0
+                nextGrid[c][grid.length - 1] = 0
+                nextGrid[0][r] = 0
+                nextGrid[grid.length - 1][r] = 0
+                // nextGrid[1][r] = 0
 
                 if (grid[c][r] === 0) { // if the current cell on iteration is 0, on the nextGrid generated, either make the cell alive if it has 3 neighbors, otherwise, leave it dead
                     switch(sum) {
@@ -123,16 +126,7 @@ class Game extends React.Component {
                         default:
                             nextGrid[c][r] = 0 // else set to dead...
                     }
-                }
-                
-        
-                // sum = 0
-                // if (grid[c][r - 1] === undefined || grid[c + 1][r] === undefined || grid[c - 1][r] === undefined || grid[c][r + 1] === undefined) {
-                // //     grid[c][r] = 1
-                // //     // break
-                // } else {
-                // }
-                
+                } 
             }
         }
         return nextGrid
@@ -149,13 +143,27 @@ class Game extends React.Component {
         // console.log(this.state.isPaused)
     }
 
+    handleClear = () => {
+        this.setState({
+            renderCanvas: this.state.renderCanvas = false,
+            count: this.state.count = 0
+        })
+        this.setState({renderCanvas: this.state.renderCanvas = true})
+        
+        // var newGrid = this.setup
+
+        // this.props.update
+        // console.log(this.props.update)
+    }
+
     render() {
     return (
         <>
-        <canvas id='game' ref='canvas'></canvas>
+        {this.state.renderCanvas ? (<canvas id='game' ref='canvas'></canvas>) : null}
             <div className="controls">
             <button className="start" onClick={this.handlePause}>{this.state.isPaused ? "Pause" : "Play"}</button>
-                {/* <button className="stop">Stop</button> */}
+                <button className="clear" onClick={this.props.update}>Clear</button>
+                <h4>Generation Number: {this.state.count}</h4>
             </div>
         </>
     )

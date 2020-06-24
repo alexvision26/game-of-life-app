@@ -1,15 +1,36 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
 }
 
-/* .App-header {
+.App-header {
   background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: 1.2vw;
   color: white;
-} */
+  width: 15%;
+}
 
+.App-header h1 {
+  max-width: 80%;
+  margin: 0 auto;
+  margin-top: 25%;
+}
+
+.main-content {
+  padding-top: 2%;
+  width: 85%;
+}
+
+canvas {
+  padding: -5%;
+  margin: 1%;
+  clip: 50px;
+  box-sizing: border-box;
+  /* border: 1px solid red; */
+  /* border: 50px solid black;
+  box-shadow: inset 0px 0px 0px 50px red; */
+}
