@@ -16,7 +16,10 @@ class CustomGame extends React.Component {
             colorPanel: false,
             start: true,
             drawMode: false,
-            gridMode: localStorage.getItem('gridMode')
+            gridMode: localStorage.getItem('gridMode'),
+            inputScale: 1000,
+            gridFps: localStorage.getItem('gridFPS'),
+            updateFps: ''
         }
     }
 
@@ -29,8 +32,8 @@ class CustomGame extends React.Component {
         canvas.addEventListener(this.state.drawMode === true ? 'mousemove' : 'click', handleClick)
         // canvas.addEventListener('mousemove', handleClick)
 
-        const size = 1000 // size of the canvas
-        const resolution = 10 // size of each individual pixel or cell
+        const size = this.state.inputScale // size of the canvas
+        const resolution = this.state.inputScale / 100 // size of each individual pixel or cell
         localStorage.setItem('gridMode', 'custom')
 
         canvas.width = size
@@ -68,21 +71,39 @@ class CustomGame extends React.Component {
         // }
         this.displayGrid(grid, ctx, resolution)
         
-        
+
+        // controlling speed of animation
+
+        let fps = this.state.gridFps
+
         const play = () => { // the loop for the game with a pause flag
+            // setTimeout(function() {
+            //     requestAnimationFrame(play)
+            // }, 1000 / fps)
+            this.animate(play, fps)
+            
             if (this.state.isPaused === false){
                 grid = this.nextGrid(grid)
                 this.displayGrid(grid, ctx, resolution)
                 this.setState({count: this.state.count += 1})
             }
-            // if (this.state.running === true) {
-            requestAnimationFrame(play)
-            // }
         }
-
         play()
         
     } //componentDidMount
+
+    animate = (play, fps) => {
+        function go() {
+        setTimeout(function() {
+            requestAnimationFrame(play)
+        }, 1000 / fps)
+        }
+        go()
+    }
+
+    // componentDidUpdate() {
+        
+    //     }
 
     displayGrid = (grid, ctx, resolution) => { //Display the grid in the DOM
         for (let c = 0; c < grid.length; c++){ // Loop through columns
@@ -98,11 +119,6 @@ class CustomGame extends React.Component {
                     ctx.stroke()
                 }
                 
-
-                // if (this.state.start){
-                //     ctx.stroke()
-                //     // this.setState({start: this.state.start = false})
-                // }
             }
         }
     }
@@ -240,6 +256,18 @@ class CustomGame extends React.Component {
         console.log(this.state.gridMode)
     }
 
+    setFps = (e) => {
+        this.setState({gridFps: this.state.updateFps})
+        localStorage.setItem('gridFPS', this.state.updateFps)
+        this.props.update()
+    }
+
+    handleFpsChange = (e) => {
+        this.setState({
+            updateFps: e.target.value
+        })
+    }
+
     render() {
     return (
         <>
@@ -262,6 +290,11 @@ class CustomGame extends React.Component {
                     this.handleGrid()
                     this.props.update()
                 }} >{this.state.gridMode === 'custom' ? "Random Grid" : "Custom Grid"}</button>
+                {/* <button className='fps'>Change FPS</button> */}
+                <form>
+                <input value={this.state.updateFps} onChange={this.handleFpsChange} placeholder='Input FPS...'></input><span><button type='button' name='fps' onClick={this.setFps}>Update</button> FPS: {this.state.gridFps}</span>
+                </form>
+                
                 <h4>Generation Number: {this.state.count}</h4>
             </div>
             

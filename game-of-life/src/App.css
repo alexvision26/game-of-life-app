@@ -47,6 +47,7 @@ button:hover {
 .controls h4 {
   font-size: 1.3rem;
   color: white;
+  padding-bottom: 0;
 }
 
 canvas {
@@ -120,7 +121,7 @@ canvas {
 .rules-section {
   background-color: #282c34e1;
   width: 20%;
-  margin: 2% 9% 2% 0%;
+  margin: 2% 6% 2% 0%;
   padding: 3%;
   font-size: 1.3rem;
   color: white;
