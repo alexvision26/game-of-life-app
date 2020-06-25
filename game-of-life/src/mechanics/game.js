@@ -8,10 +8,13 @@ class Game extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isPaused: false,
+            isPaused: true,
             count: 0,
             renderCanvas: true,
-            running: false
+            running: false,
+            color: '#282c34',
+            colorPanel: false,
+            start: true
         }
     }
 
@@ -19,8 +22,8 @@ class Game extends React.Component {
         const canvas = this.refs.canvas
         const ctx = canvas.getContext('2d')
 
-        const size = 1000 // size of the canvas
-        const resolution = 10 // size of each individual pixel or cell
+        const size = 5000 // size of the canvas
+        const resolution = 20 // size of each individual pixel or cell
 
         canvas.width = size
         canvas.height = size
@@ -28,22 +31,32 @@ class Game extends React.Component {
         const ROWS = canvas.height / resolution
         var grid = setupGrid()
 
+        // if (this.state.start){
+        //     var inGrid = initGrid()
+        //     this.displayGrid(inGrid, ctx, resolution)
+        //     this.setState({start: this.state.start = false})
+        // }
+
         function setupGrid() {
             return new Array(COLS).fill(null).map(() => new Array(ROWS).fill(0)
             .map(() => Math.floor(Math.random() * 2)))
         }
+
+        // function initGrid() { // initGrid allows user to select their grid points
+        //     return new Array(COLS).fill(null).map(() => new Array(ROWS).fill(0))
+        // }
+
+        
         
         const play = () => { // the loop for the game with a pause flag
-            if (this.state.isPaused === true){
+            if (this.state.isPaused === false){
                 grid = this.nextGrid(grid)
                 this.displayGrid(grid, ctx, resolution)
                 this.setState({count: this.state.count += 1})
             }
+            // if (this.state.running === true) {
             requestAnimationFrame(play)
-
-            if (this.state.renderCanvas) {
-                // grid = this.displayGrid(grid, ctx, resolution)
-            }
+            // }
         }
 
         play()
@@ -57,9 +70,12 @@ class Game extends React.Component {
 
                 ctx.beginPath() // creating the visual display of the grid
                 ctx.rect(c * resolution, r * resolution, resolution, resolution)
-                ctx.fillStyle = cell ? 'black' : 'white' // if the cell has no value, it is white, if it is 1, it is black
+                ctx.fillStyle = cell ? this.state.color : 'white' // if the cell has no value, it is white, if it is 1, it is black
                 ctx.fill()
-
+                // if (this.state.start){
+                //     ctx.stroke()
+                //     // this.setState({start: this.state.start = false})
+                // }
             }
         }
     }
@@ -138,7 +154,8 @@ class Game extends React.Component {
     
     handlePause = () => {
         this.setState({
-            isPaused: !this.state.isPaused
+            isPaused: !this.state.isPaused,
+            // running: this.state.running = true
         })
         // console.log(this.state.isPaused)
     }
@@ -156,15 +173,39 @@ class Game extends React.Component {
         // console.log(this.props.update)
     }
 
+    handleColor = (color) => {
+        this.setState({
+            color: color,
+            colorPanel: this.state.colorPanel = false
+        })
+    }
+
+    showColor = () => {
+        this.setState({
+            colorPanel: this.state.colorPanel = true
+        })
+    }
+
     render() {
     return (
         <>
         {this.state.renderCanvas ? (<canvas id='game' ref='canvas'></canvas>) : null}
             <div className="controls">
-            <button className="start" onClick={this.handlePause}>{this.state.isPaused ? "Pause" : "Play"}</button>
+
+            {this.state.colorPanel === false ? (<><h3 className='toggle-panel' onClick={this.showColor}>^</h3></>) : <div className='boxes'>
+                <div className='box red' onClick={() => this.handleColor('rgb(255, 68, 68)')}></div>
+                <div className='box blue' onClick={() => this.handleColor('cadetblue')}></div>
+                <div className='box orange' onClick={() => this.handleColor('orange')}></div>
+                <div className='box pink' onClick={() => this.handleColor('#e091af')}></div>
+                <div className='box teal' onClick={() => this.handleColor('#008080')}></div>
+                <div className='box purple' onClick={() => this.handleColor('#843ab6')}></div>
+                </div>}
+
+                <button className="start" onClick={this.handlePause}>{this.state.isPaused ? "Play" : "Pause"}</button>
                 <button className="clear" onClick={this.props.update}>Clear</button>
                 <h4>Generation Number: {this.state.count}</h4>
             </div>
+            
         </>
     )
     }
