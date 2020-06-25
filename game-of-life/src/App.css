@@ -19,9 +19,6 @@
 .App-header h1 {
   max-width: 100%;
   width: 100%;
-  /* vertical-align: baseline; */
-  /* margin: 0 auto; */
-  /* margin-top: 2%; */
   transform: rotate(270deg);
   white-space: nowrap;
 }
@@ -53,14 +50,13 @@ button:hover {
 }
 
 canvas {
-  width: 45%;
+  /* width: 45%; */
   padding: .25%;
   margin: 1%;
   clip: 50px;
   box-sizing: border-box;
   border: 3px solid #22252c;
   background-color: white;
-  /* border: 50px solid black; */
   box-shadow: 4px 4px 10px 7px #282c3462;
 }
 
@@ -93,9 +89,7 @@ canvas {
 .box {
   height: 65px;
   width: 65px;
-  /* margin: .5%; */
   margin-bottom: 15px;
-  /* border: 1px solid black; */
   clear: both;
 }
 
@@ -119,18 +113,19 @@ canvas {
 }
 
 .game-section {
-  width: 75%;
-  padding-top: 6%;
+  width: 70%;
+  padding-top: 1%;
 }
 
 .rules-section {
   background-color: #282c34e1;
   width: 20%;
-  margin: 4% 9% 5% 0%;
+  margin: 2% 9% 2% 0%;
   padding: 3%;
   font-size: 1.3rem;
   color: white;
   box-shadow: 4px 4px 10px 7px #282c3462;
+  height: 70vh;
 }
 
 .rules-list {
@@ -141,31 +136,3 @@ canvas {
 li {
   margin-top: 5%;
 }
-
-
-/* Tool tip */
-/* .tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
-}
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  
-  /* Position the tooltip */
-  /* position: absolute;
-  z-index: 1;
-  top: -5px;
-  left: 105%;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-} */

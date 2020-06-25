@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import './App.css';
 import Game from './mechanics/game';
-
+import CustomGame from './mechanics/CustomGame';
+import {BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom';
+ 
 
 function App() {
 
@@ -13,6 +15,7 @@ function App() {
   }
 
   return (
+    <Router>
     <div className="App">
 
       <div className="App-header">
@@ -20,8 +23,21 @@ function App() {
       </div>
       
       <div className="main-content">
+        <div className='links'>
+          {/* <Link to='/'>Custom</Link>
+          <Link to='/random'>Preset</Link> */}
+        </div>
         <div className='game-section'>
-          <Game update={forceUpdate}/>
+          <Switch>
+            <Route path='/'>
+              <CustomGame update={forceUpdate}/>
+            </Route>
+
+            <Route path='/random'>
+              <Game update={forceUpdate}/>
+            </Route>
+
+          </Switch>
         </div>
         <div className='rules-section'><h3>About John Conway's Game of Life</h3>
           <p>
@@ -40,6 +56,7 @@ function App() {
       </div>
     
     </div>
+    </Router>
   );
 }
 

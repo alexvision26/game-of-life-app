@@ -23,7 +23,7 @@ class Game extends React.Component {
         const ctx = canvas.getContext('2d')
 
         const size = 5000 // size of the canvas
-        const resolution = 20 // size of each individual pixel or cell
+        const resolution = 50 // size of each individual pixel or cell
 
         canvas.width = size
         canvas.height = size
