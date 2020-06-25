@@ -16,7 +16,7 @@ class CustomGame extends React.Component {
             colorPanel: false,
             start: true,
             drawMode: false,
-            gridMode: 'custom'
+            gridMode: localStorage.getItem('gridMode')
         }
     }
 
@@ -24,11 +24,14 @@ class CustomGame extends React.Component {
         const canvas = this.refs.canvas
         const ctx = canvas.getContext('2d')
 
+        console.log(this.state.gridMode)
+
         canvas.addEventListener(this.state.drawMode === true ? 'mousemove' : 'click', handleClick)
         // canvas.addEventListener('mousemove', handleClick)
 
         const size = 1000 // size of the canvas
         const resolution = 10 // size of each individual pixel or cell
+        localStorage.setItem('gridMode', 'custom')
 
         canvas.width = size
         canvas.height = size
@@ -225,9 +228,15 @@ class CustomGame extends React.Component {
     }
 
     handleGrid = () => {
-        this.setState({
-            gridMode: this.state.gridMode === 'custom' ? 'random' : 'custom'
-        })
+        // this.setState({
+        //     gridMode: this.state.gridMode === 'custom' ? 'random' : 'custom'
+        // })
+        if (this.state.gridMode === 'custom') {
+            localStorage.setItem('gridMode', 'random')
+        } else if (this.state.gridMode === 'random') {
+            localStorage.setItem('gridMode', 'custom')
+        }
+        
         console.log(this.state.gridMode)
     }
 
@@ -249,7 +258,10 @@ class CustomGame extends React.Component {
                 <button className="start" onClick={this.handlePause}>{this.state.isPaused ? "Play" : "Pause"}</button>
                 <button className="clear" onClick={this.props.update}>Clear</button>
                 {/* <button className={this.state.drawMode ? "click-mode" : "draw-mode"} onClick={this.setDrawMode}>{this.state.drawMode ? 'Click Mode' : 'Draw Mode'}</button> */}
-                <button className='rand' onClick={this.handleGrid} >Random Grid</button>
+                <button className='rand' onClick={() => {
+                    this.handleGrid()
+                    this.props.update()
+                }} >{this.state.gridMode === 'custom' ? "Random Grid" : "Custom Grid"}</button>
                 <h4>Generation Number: {this.state.count}</h4>
             </div>
             
