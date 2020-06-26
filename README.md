@@ -6,7 +6,7 @@
     3. Any cell with more than three live neighbors dies due to overpopulation
     4. Any dead cell with exactly three neighbors becomes a live cell, reproduction
 
-## Technologies Used:
+## Technology Used:
 
 React.js & HTML5 Canvas
 
