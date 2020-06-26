@@ -22,7 +22,7 @@ class Game extends React.Component {
         const canvas = this.refs.canvas
         const ctx = canvas.getContext('2d')
 
-        const size = 5000 // size of the canvas
+        const size = 500 // size of the canvas
         const resolution = 50 // size of each individual pixel or cell
 
         canvas.width = size
@@ -41,12 +41,6 @@ class Game extends React.Component {
             return new Array(COLS).fill(null).map(() => new Array(ROWS).fill(0)
             .map(() => Math.floor(Math.random() * 2)))
         }
-
-        // function initGrid() { // initGrid allows user to select their grid points
-        //     return new Array(COLS).fill(null).map(() => new Array(ROWS).fill(0))
-        // }
-
-        
         
         const play = () => { // the loop for the game with a pause flag
             if (this.state.isPaused === false){

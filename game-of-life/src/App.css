@@ -123,14 +123,14 @@ canvas {
   width: 20%;
   margin: 2% 6% 2% 0%;
   padding: 3%;
-  font-size: 1.3rem;
+  font-size: 1.15rem;
   color: white;
   box-shadow: 4px 4px 10px 7px #282c3462;
   height: 70vh;
 }
 
 .rules-list {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   text-align: left;
 }
 

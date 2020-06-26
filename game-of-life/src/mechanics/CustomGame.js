@@ -17,7 +17,7 @@ class CustomGame extends React.Component {
             start: true,
             drawMode: false,
             gridMode: localStorage.getItem('gridMode'),
-            inputScale: 1000,
+            inputScale: 800,
             gridFps: localStorage.getItem('gridFPS'),
             updateFps: ''
         }
@@ -33,7 +33,7 @@ class CustomGame extends React.Component {
         // canvas.addEventListener('mousemove', handleClick)
 
         const size = this.state.inputScale // size of the canvas
-        const resolution = this.state.inputScale / 100 // size of each individual pixel or cell
+        const resolution = 20 // size of each individual pixel or cell
         localStorage.setItem('gridMode', 'custom')
 
         canvas.width = size
