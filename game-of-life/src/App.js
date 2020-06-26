@@ -24,20 +24,9 @@ function App() {
       
       <div className="main-content">
         <div className='links'>
-          {/* <Link to='/'>Custom</Link>
-          <Link to='/random'>Preset</Link> */}
         </div>
         <div className='game-section'>
-          <Switch>
-            <Route path='/'>
               <CustomGame update={forceUpdate}/>
-            </Route>
-
-            {/* <Route path='/random'>
-              <Game update={forceUpdate}/>
-            </Route> */}
-
-          </Switch>
         </div>
         <div className='rules-section'><h3>About John Conway & The Game of Life</h3>
           <p>
