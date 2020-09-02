@@ -43,12 +43,6 @@ class CustomGame extends React.Component {
         var grid = this.state.gridMode === 'custom' ? setupGrid() : this.randomGrid(COLS, ROWS)
         console.log(grid)
 
-        // if (this.state.start){
-        //     var inGrid = initGrid()
-        //     this.displayGrid(inGrid, ctx, resolution)
-        //     this.setState({start: this.state.start = false})
-        // }
-
         function handleClick(e) {
             ctx.fillStyle = 'black'
 
@@ -66,9 +60,7 @@ class CustomGame extends React.Component {
             return new Array(COLS).fill(null).map(() => new Array(ROWS).fill(0))
         }
 
-        // function initGrid() { // initGrid allows user to select their grid points
-        //     return new Array(COLS).fill(null).map(() => new Array(ROWS).fill(0))
-        // }
+
         this.displayGrid(grid, ctx, resolution)
         
 
@@ -101,9 +93,6 @@ class CustomGame extends React.Component {
         go()
     }
 
-    // componentDidUpdate() {
-        
-    //     }
 
     displayGrid = (grid, ctx, resolution) => { //Display the grid in the DOM
         for (let c = 0; c < grid.length; c++){ // Loop through columns
@@ -205,8 +194,6 @@ class CustomGame extends React.Component {
             isPaused: !this.state.isPaused,
             running: !this.state.running
         })
-        // console.log("Paused?", this.state.isPaused)
-        // console.log("Running?", this.state.running)
     }
 
     handleClear = () => {
@@ -216,10 +203,6 @@ class CustomGame extends React.Component {
         })
         this.setState({renderCanvas: this.state.renderCanvas = true})
         
-        // var newGrid = this.setup
-
-        // this.props.update
-        // console.log(this.props.update)
     }
 
     handleColor = (color) => {
@@ -289,7 +272,7 @@ class CustomGame extends React.Component {
                 <button className='rand' onClick={() => {
                     this.handleGrid()
                     this.props.update()
-                }} >{this.state.gridMode === 'custom' ? "Random Grid" : "Custom Grid"}</button>
+                }} >{this.state.gridMode === 'custom' ? "Random" : "Custom"}</button>
                 {/* <button className='fps'>Change FPS</button> */}
                 <form>
                 <input value={this.state.updateFps} onChange={this.handleFpsChange} placeholder='Input FPS...'></input><span><button type='button' name='fps' onClick={this.setFps}>Update</button> FPS: {this.state.gridFps}</span>
